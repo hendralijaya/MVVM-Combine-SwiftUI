@@ -33,7 +33,7 @@ internal final class DefaultNoteListUseCase: NoteListUseCase {
     }
     
     func update(param: UpdateNoteParameter) -> AnyPublisher<EmptyResponse, NetworkError> {
-        repository.update(param: param.toRequest())
+        return repository.update(param: param.toRequest())
     }
     
     func delete(id: String) -> AnyPublisher<EmptyResponse, NetworkError> {

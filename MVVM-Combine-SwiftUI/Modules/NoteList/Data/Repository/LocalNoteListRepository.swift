@@ -44,7 +44,9 @@ internal final class LocalNoteListRepository: NoteListRepository {
                     
                     self.container?.mainContext.insert(entity)
                     
-                    try self.container?.mainContext.save()
+                    if self.container?.mainContext.hasChanges == true {
+                        try self.container?.mainContext.save()
+                    }
                     
                     promise(.success(true))
                 } catch {
@@ -60,7 +62,7 @@ internal final class LocalNoteListRepository: NoteListRepository {
             Task { @MainActor in
                 let id = param.id
                 let fetchDescriptor = FetchDescriptor<NoteListLocalEntity>(
-                    predicate: #Predicate {
+                    predicate: #Predicate<NoteListLocalEntity> {
                         $0.id == id
                     }
                 )
